@@ -24,6 +24,7 @@ async function run() {
         const bicycleCollection = database.collection("bicycles");
         const bicycleNewsCollection = database.collection("news");
         const bicycleReviewsCollection = database.collection("review");
+        const bicycleCustomerCollection = database.collection("customers");
 
         //All Bikes showing by get Method
 
@@ -36,7 +37,6 @@ async function run() {
         //Post Method 
         app.post('/bikes', async (req, res) => {
             const newProduct = req.body;
-            // console.log('new data hitting', req.body)
             const result = await bicycleCollection.insertOne(newProduct);
             res.json(result);
         })
@@ -54,9 +54,34 @@ async function run() {
             const reviews = await query.toArray();
             res.send(reviews);
         })
+        //Post Method For Review
         app.post('/review', async (req, res) => {
             const newReview = req.body;
             const result = await bicycleReviewsCollection.insertOne(newReview);
+            res.json(result);
+        })
+
+        //Customer Data Server Settings
+
+        app.get('/customers', async (req, res) => {
+            const query = bicycleCustomerCollection.find({});
+            const result = await query.toArray();
+            res.send(result);
+        })
+
+        app.post('/customers', async (req, res) => {
+            const newCustomer = req.body;
+            const result = await bicycleCustomerCollection.insertOne(newCustomer);
+            res.json(result);
+        })
+
+        app.put('/customers/admin', async (req, res) => {
+            const newCustomer = req.body;
+            console.log('put', newCustomer)
+            const filter = { email: newCustomer.email }
+
+            const updateInfo = { $set: { role: 'admin' } }
+            const result = await bicycleCustomerCollection.updateOne(filter, updateInfo);
             res.json(result);
         })
 
