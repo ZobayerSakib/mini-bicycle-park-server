@@ -32,6 +32,15 @@ async function run() {
             const bikes = await query.toArray();
             res.send(bikes);
         })
+
+        //Post Method 
+        app.post('/bikes', async (req, res) => {
+            const newProduct = req.body;
+            // console.log('new data hitting', req.body)
+            const result = await bicycleCollection.insertOne(newProduct);
+            res.json(result);
+        })
+
         //News showing server site method
         app.get('/news', async (req, res) => {
             const query = bicycleNewsCollection.find({});
