@@ -61,6 +61,17 @@ async function run() {
             res.json(result);
         })
 
+
+        app.get('/customers/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email: email }
+            const user = await bicycleCustomerCollection.findOne(query);
+            let isAdmin = false;
+            if (user?.role === 'admin') {
+                isAdmin = true;
+            }
+            res.json({ admin: isAdmin })
+        })
         //Customer Data Server Settings
 
         app.get('/customers', async (req, res) => {
