@@ -5,8 +5,6 @@ const port = process.env.PORT || 5000;
 const { MongoClient } = require('mongodb');
 const ObjectId = require('mongodb').ObjectId;
 require('dotenv').config()
-//oWKWpCTwhMqjOl5h
-//bicyclePark
 
 app.use(cors());
 app.use(express.json())
@@ -105,27 +103,11 @@ async function run() {
             res.send(product);
         })
 
-
-
-
-
-
-
-
     } finally {
         // await client.close()
     }
 
 } run().catch(console.dir)
-
-
-
-
-
-
-
-
-
 
 app.get('/', (req, res) => {
     res.send('Hello Bicycle park, Congratulations!!!')
